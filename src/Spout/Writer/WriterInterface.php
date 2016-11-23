@@ -23,11 +23,12 @@ interface WriterInterface
      * Inits the writer and opens it to accept data.
      * By using this method, the data will be outputted directly to the browser.
      *
-     * @param  string $outputFileName Name of the output file that will contain the data. If a path is passed in, only the file name will be kept
+     * @param string $outputFileName    Name of the output file that will contain the data. If a path is passed in, only the file name will be kept
+     * @param array  $additionalHeaders Array containing additional header to be set
+     *
      * @return WriterInterface
-     * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened
      */
-    public function openToBrowser($outputFileName);
+    public function openToBrowser($outputFileName, $additionalHeaders = []);
 
     /**
      * Write given data to the output. New data will be appended to end of stream.

@@ -127,11 +127,13 @@ abstract class AbstractWriter implements WriterInterface
      * @codeCoverageIgnore
      *
      * @api
-     * @param  string $outputFileName Name of the output file that will contain the data. If a path is passed in, only the file name will be kept
+     *
+     * @param string $outputFileName    Name of the output file that will contain the data. If a path is passed in, only the file name will be kept
+     * @param array  $additionalHeaders Array containing additional header to be set
+     *
      * @return AbstractWriter
-     * @throws \Box\Spout\Common\Exception\IOException If the writer cannot be opened
      */
-    public function openToBrowser($outputFileName)
+    public function openToBrowser($outputFileName, $additionalHeaders = [])
     {
         $this->outputFilePath = $this->globalFunctionsHelper->basename($outputFileName);
 
@@ -145,6 +147,11 @@ abstract class AbstractWriter implements WriterInterface
         // Set headers
         $this->globalFunctionsHelper->header('Content-Type: ' . static::$headerContentType);
         $this->globalFunctionsHelper->header('Content-Disposition: attachment; filename="' . $this->outputFilePath . '"');
+
+        // Set additional headers
+        foreach ($additionalHeaders as $key => $value) {
+            $this->globalFunctionsHelper->header($key . ': ' . $value);
+        }
 
         /*
          * When forcing the download of a file over SSL,IE8 and lower browsers fail
